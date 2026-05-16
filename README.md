@@ -3,8 +3,36 @@
 # Lab07: Visualización en LCD 16x2 usando módulo I²C con microcontrolador PIC
 
 ## Integrantes
+* [Joused Danilo Forero Rodriguez](https://github.com/jouseddanilo)
+* [Laura Ximena Rojas Pachon](https://github.com/LauXRS)
+## INTRODUCCIÓN
+La práctica se centra en la configuración y uso del módulo I²C (Inter-Integrated Circuit) en el microcontrolador PIC18F45K22 para controlar una pantalla LCD 16x2 mediante un adaptador PCF8574. El objetivo es enviar datos y comandos a la pantalla LCD a través del protocolo I²C, lo que simplifica la conexión y reduce la cantidad de pines necesarios.
 
-## Documentación
+## OBJETIVOS 
+* Configurar el módulo I²C (MSSP) del PIC18F45K22 en modo maestro.
+* Comunicar el PIC con una LCD 16x2 utilizando el adaptador basado en PCF8574.
+* Implementar funciones para enviar comandos y caracteres vía I²C.
+* Mostrar mensajes en la pantalla LCD desde el programa principal.
+
+## MATERIALES
+* Microcontrolador: PIC18F45K22 o compatible.
+* Programador/Debugger: PICkit 3/4.
+* Fuente de alimentación (o PICkit 3/4).
+* Pantalla LCD 16x2.
+* Módulo I²C PCF8574.
+* Entorno de programación: MPLAB X IDE con compilador XC8.
+Documentación
+
+## FUNDAMENTO TEÓRICO
+El protocolo I²C es un sistema de comunicación serial que utiliza dos líneas: SDA (Serial Data Line) y SCL (Serial Clock Line). Este protocolo permite la conexión de múltiples dispositivos esclavos en el mismo bus de comunicación, facilitando la interacción entre ellos.
+
+### Ventajas de uso de I²C
+* Reducción de pines: Sin I²C, la LCD requiere de 6 a 8 pines del microcontrolador. Con I²C, solo se necesitan 2 pines (SDA y SCL).
+* Comunicación half-duplex: Solo un dispositivo puede enviar datos a la vez, lo que simplifica la gestión de la comunicación.
+
+El módulo MSSP del PIC18F45K22 permite operar en modo I²C, utilizando buffers y registros de control para gestionar la comunicación. La dirección del módulo PCF8574 es 0x27, pero para la transmisión en el bus I²C se utiliza 0x4E.
+
+## PROCEDIMIENTO 
 
 ## Diagramas
 
