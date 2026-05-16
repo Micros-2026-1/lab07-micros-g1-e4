@@ -33,10 +33,17 @@ El protocolo I²C es un sistema de comunicación serial que utiliza dos líneas:
 El módulo MSSP del PIC18F45K22 permite operar en modo I²C, utilizando buffers y registros de control para gestionar la comunicación. La dirección del módulo PCF8574 es 0x27, pero para la transmisión en el bus I²C se utiliza 0x4E.
 
 ## PROCEDIMIENTO 
+### Montaje del Circuito
+Realizar el montaje del circuito según el esquema proporcionado, conectando el módulo I²C a la LCD y al microcontrolador.
 
-## Diagramas
+
+https://github.com/user-attachments/assets/3c5cceda-314a-4f67-9e76-356b493beb1a
 
 ## Evidencias de implementación
+
+
+https://github.com/user-attachments/assets/1eb57cb4-06fc-47ed-881b-4d59540ba528
+
 
 ## Preguntas
 
