@@ -36,8 +36,8 @@ El módulo MSSP del PIC18F45K22 permite operar en modo I²C, utilizando buffers 
 ### Montaje del Circuito
 Realizar el montaje del circuito según el esquema proporcionado, conectando el módulo I²C a la LCD y al microcontrolador.
 
+<img width="779" height="568" alt="WhatsApp Image 2026-05-15 at 19 34 14" src="https://github.com/user-attachments/assets/2c83b18b-1922-4832-9bbf-d15b3d2f4357" />
 
-https://github.com/user-attachments/assets/3c5cceda-314a-4f67-9e76-356b493beb1a
 
 ## Evidencias de implementación
 
@@ -48,12 +48,24 @@ https://github.com/user-attachments/assets/1eb57cb4-06fc-47ed-881b-4d59540ba528
 ## Preguntas
 
 1. ¿Por qué I²C se clasifica como half-duplex mientras que SPI es full-duplex? ¿Qué implicación práctica tiene esa diferencia para el control de una LCD?.
-2. En I2C_init() se asigna SSPCON1 = 0x28. Desglose ese valor bit a bit e identifique qué modo de operación del MSSP se está seleccionando y por qué se elige ese valor.
-3. Las funciones I2C_start(), I2C_stop() e I2C_write() comparten el mismo patrón: activar un bit de control y luego esperar con while(!PIR1bits.SSPIF). ¿Qué representa la bandera SSPIF y por qué se limpia después de cada operación?.
-4. El fuse PBADEN = OFF está presente en la configuración. ¿Qué efecto tendría dejarlo en ON sobre los pines del puerto B, y por qué podría causar problemas si se usan esos pines como salidas digitales?.
-5. Compare el control de la LCD en modo paralelo (lab04) con el modo I²C de este laboratorio. Mencione ventajas y desventajas de cada enfoque en términos de: cantidad de pines usados, velocidad de actualización y complejidad del código.
-6. El bus I²C permite conectar múltiples esclavos con solo dos hilos. Si se quisiera agregar un segundo módulo PCF8574 al mismo bus (por ejemplo, para controlar un segundo LCD), ¿qué cambio mínimo sería necesario en el hardware y en el código?
+* I²C se clasifica como half-duplex porque en un momento dado, solo un dispositivo puede enviar datos por el bus. Esto significa que el maestro debe esperar a que el esclavo responda antes de poder enviar más datos. Por otro lado, SPI es full-duplex, lo que permite que ambos dispositivos envíen y reciban datos simultáneamente.
+3. En I2C_init() se asigna SSPCON1 = 0x28. Desglose ese valor bit a bit e identifique qué modo de operación del MSSP se está seleccionando y por qué se elige ese valor.
+* El valor 0x28 en binario es 00101000. Desglosando bit a bit a continuacion:
+Bit 7 (SSPEN): 0 (deshabilitado)
+Bit 6 (CKP): 0 (no afecta)
+Bit 5 (SSPM3): 1 (modo maestro)
+Bit 4 (SSPM2): 0
+Bit 3 (SSPM1): 1 (indica el modo de operación)
+Bit 2 (SSPM0): 0
+Bit 1 y 0: 00 (no afectan)
 
+4. Las funciones I2C_start(), I2C_stop() e I2C_write() comparten el mismo patrón: activar un bit de control y luego esperar con while(!PIR1bits.SSPIF). ¿Qué representa la bandera SSPIF y por qué se limpia después de cada operación?.
+5. El fuse PBADEN = OFF está presente en la configuración. ¿Qué efecto tendría dejarlo en ON sobre los pines del puerto B, y por qué podría causar problemas si se usan esos pines como salidas digitales?.
+6. Compare el control de la LCD en modo paralelo (lab04) con el modo I²C de este laboratorio. Mencione ventajas y desventajas de cada enfoque en términos de: cantidad de pines usados, velocidad de actualización y complejidad del código.
+7. El bus I²C permite conectar múltiples esclavos con solo dos hilos. Si se quisiera agregar un segundo módulo PCF8574 al mismo bus (por ejemplo, para controlar un segundo LCD), ¿qué cambio mínimo sería necesario en el hardware y en el código?
+
+## RESULTADOS 
+Durante la práctica, se logró establecer una comunicación exitosa entre el PIC y la LCD 16x2. Los mensajes fueron visualizados correctamente en la pantalla, confirmando el funcionamiento del módulo I²C y la correcta implementación del código.
 ## Conclusiones
-
+La práctica permitió comprender el funcionamiento del protocolo I²C en la comunicación con dispositivos periféricos como la LCD 16x2. La implementación de este protocolo simplifica la conexión y manejo de múltiples dispositivos, siendo una herramienta valiosa en aplicaciones de sistemas embebidos.
 ## Referencias
