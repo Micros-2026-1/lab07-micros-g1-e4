@@ -42,7 +42,7 @@ Realizar el montaje del circuito según el esquema proporcionado, conectando el 
 ## Evidencias de implementación
 
 
-https://github.com/user-attachments/assets/1eb57cb4-06fc-47ed-881b-4d59540ba52
+https://github.com/user-attachments/assets/2ffc9158-0bc4-468a-9e2c-d1254f62b3f3
 
 
 ## Preguntas
@@ -73,10 +73,17 @@ Bit 1 y 0: 00 (no afectan)
 |------------------|--------------------|
 | Cantidad de Pines Usados: 6-8 pines. |     Cantidad de Pines Usados: Solo 2 pines (SDA y SCL). |                
 | La velocidad de Actualización generalmente más rápida debido a la comunicación simultánea. |  La velocidad de actualización Puede ser más lenta debido a la naturaleza half-duplex.  |
-| El codigo es mas complejo, ya que se deben manejar múltiples líneas.|        El codigo es menos complejo, ya que se maneja a través de un solo bus.        |       
+| El codigo es mas complejo, ya que se deben manejar múltiples líneas.|        El codigo es menos complejo, ya que se maneja a través de un solo bus.        |     
 
-8. El bus I²C permite conectar múltiples esclavos con solo dos hilos. Si se quisiera agregar un segundo módulo PCF8574 al mismo bus (por ejemplo, para controlar un segundo LCD), ¿qué cambio mínimo sería necesario en el hardware y en el código?
 
+### VENTAJAS Y DESVENTAJAS 
+* Paralelo: Ventaja en velocidad; desventaja en la cantidad de pines.
+* I²C: Ventaja en simplicidad de conexión; desventaja en velocidad de actualización.
+
+6. El bus I²C permite conectar múltiples esclavos con solo dos hilos. Si se quisiera agregar un segundo módulo PCF8574 al mismo bus (por ejemplo, para controlar un segundo LCD), ¿qué cambio mínimo sería necesario en el hardware y en el código?
+### Cambio mínimo necesario en hardware: Conectar un segundo módulo PCF8574 al mismo bus I²C utilizando las mismas líneas SDA y SCL. Cada módulo debe tener una dirección diferente.
+
+### Cambio en el código: Se debe modificar el código para incluir la dirección del segundo módulo PCF8574 y asegurarse de que las funciones de escritura y lectura se dirijan a la dirección correcta según el módulo que se desea controlar.
 ## RESULTADOS 
 Durante la práctica, se logró establecer una comunicación exitosa entre el PIC y la LCD 16x2. Los mensajes fueron visualizados correctamente en la pantalla, confirmando el funcionamiento del módulo I²C y la correcta implementación del código.
 ## Conclusiones
