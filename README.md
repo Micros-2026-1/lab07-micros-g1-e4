@@ -88,4 +88,3 @@ Bit 1 y 0: 00 (no afectan)
 Durante la práctica, se logró establecer una comunicación exitosa entre el PIC y la LCD 16x2. Los mensajes fueron visualizados correctamente en la pantalla, confirmando el funcionamiento del módulo I²C y la correcta implementación del código.
 ## Conclusiones
 La práctica permitió comprender el funcionamiento del protocolo I²C en la comunicación con dispositivos periféricos como la LCD 16x2. La implementación de este protocolo simplifica la conexión y manejo de múltiples dispositivos, siendo una herramienta valiosa en aplicaciones de sistemas embebidos.
-## Referencias
