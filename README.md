@@ -42,14 +42,14 @@ Realizar el montaje del circuito según el esquema proporcionado, conectando el 
 ## Evidencias de implementación
 
 
-https://github.com/user-attachments/assets/1eb57cb4-06fc-47ed-881b-4d59540ba528
+https://github.com/user-attachments/assets/1eb57cb4-06fc-47ed-881b-4d59540ba52
 
 
 ## Preguntas
 
 1. ¿Por qué I²C se clasifica como half-duplex mientras que SPI es full-duplex? ¿Qué implicación práctica tiene esa diferencia para el control de una LCD?.
 * I²C se clasifica como half-duplex porque en un momento dado, solo un dispositivo puede enviar datos por el bus. Esto significa que el maestro debe esperar a que el esclavo responda antes de poder enviar más datos. Por otro lado, SPI es full-duplex, lo que permite que ambos dispositivos envíen y reciban datos simultáneamente.
-3. En I2C_init() se asigna SSPCON1 = 0x28. Desglose ese valor bit a bit e identifique qué modo de operación del MSSP se está seleccionando y por qué se elige ese valor.
+2. En I2C_init() se asigna SSPCON1 = 0x28. Desglose ese valor bit a bit e identifique qué modo de operación del MSSP se está seleccionando y por qué se elige ese valor.
 * El valor 0x28 en binario es 00101000. Desglosando bit a bit a continuacion:
 Bit 7 (SSPEN): 0 (deshabilitado)
 Bit 6 (CKP): 0 (no afecta)
@@ -59,10 +59,23 @@ Bit 3 (SSPM1): 1 (indica el modo de operación)
 Bit 2 (SSPM0): 0
 Bit 1 y 0: 00 (no afectan)
 
-4. Las funciones I2C_start(), I2C_stop() e I2C_write() comparten el mismo patrón: activar un bit de control y luego esperar con while(!PIR1bits.SSPIF). ¿Qué representa la bandera SSPIF y por qué se limpia después de cada operación?.
-5. El fuse PBADEN = OFF está presente en la configuración. ¿Qué efecto tendría dejarlo en ON sobre los pines del puerto B, y por qué podría causar problemas si se usan esos pines como salidas digitales?.
-6. Compare el control de la LCD en modo paralelo (lab04) con el modo I²C de este laboratorio. Mencione ventajas y desventajas de cada enfoque en términos de: cantidad de pines usados, velocidad de actualización y complejidad del código.
-7. El bus I²C permite conectar múltiples esclavos con solo dos hilos. Si se quisiera agregar un segundo módulo PCF8574 al mismo bus (por ejemplo, para controlar un segundo LCD), ¿qué cambio mínimo sería necesario en el hardware y en el código?
+3. Las funciones I2C_start(), I2C_stop() e I2C_write() comparten el mismo patrón: activar un bit de control y luego esperar con while(!PIR1bits.SSPIF). ¿Qué representa la bandera SSPIF y por qué se limpia después de cada operación?.
+* Se limpia para permitir que la bandera se active de nuevo en la próxima operación. Si no se limpia, el microcontrolador podría pensar que la operación anterior aún está en curso, causando errores en la comunicación.
+  
+4. El fuse PBADEN = OFF está presente en la configuración. ¿Qué efecto tendría dejarlo en ON sobre los pines del puerto B, y por qué podría causar problemas si se usan esos pines como salidas digitales?.
+* Si el fuse PBADEN está configurado en ON, los pines del puerto B se pueden usar como entradas analógicas. Esto significa que los pines que normalmente se utilizarían como salidas digitales estarían en modo analógico, lo que podría causar problemas al intentar enviar señales digitales.
+  
+5. Compare el control de la LCD en modo paralelo (lab04) con el modo I²C de este laboratorio. Mencione ventajas y desventajas de cada enfoque en términos de: cantidad de pines usados, velocidad de actualización y complejidad del código.
+
+#### Tabla 1: Comparación entre control de LCD en modo paralelo e i^2C
+
+| Modo paralelo (lab04) | Modo i^2C |
+|------------------|--------------------|
+| Cantidad de Pines Usados: 6-8 pines. |     Cantidad de Pines Usados: Solo 2 pines (SDA y SCL). |                
+| La velocidad de Actualización generalmente más rápida debido a la comunicación simultánea. |  La velocidad de actualización Puede ser más lenta debido a la naturaleza half-duplex.  |
+| El codigo es mas complejo, ya que se deben manejar múltiples líneas.|        El codigo es menos complejo, ya que se maneja a través de un solo bus.        |       
+
+8. El bus I²C permite conectar múltiples esclavos con solo dos hilos. Si se quisiera agregar un segundo módulo PCF8574 al mismo bus (por ejemplo, para controlar un segundo LCD), ¿qué cambio mínimo sería necesario en el hardware y en el código?
 
 ## RESULTADOS 
 Durante la práctica, se logró establecer una comunicación exitosa entre el PIC y la LCD 16x2. Los mensajes fueron visualizados correctamente en la pantalla, confirmando el funcionamiento del módulo I²C y la correcta implementación del código.
